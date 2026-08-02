@@ -1,0 +1,57 @@
+name: Android build
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Generate native hosts and validate Dart code
+        run: bash tool/bootstrap_native_hosts.sh
+      - name: Verify Android release secrets
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          test -n "$KEYSTORE_BASE64"
+          test -n "$KEYSTORE_PASSWORD"
+          test -n "$KEY_ALIAS"
+          test -n "$KEY_PASSWORD"
+      - name: Restore Android signing key
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 --decode > android/app/release.keystore
+          printf 'storeFile=release.keystore\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' "$KEYSTORE_PASSWORD" "$KEY_ALIAS" "$KEY_PASSWORD" > android/key.properties
+          dart run tool/prepare_android_release.dart
+      - name: Build signed Android release packages
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        run: |
+          flutter build appbundle --release
+          flutter build apk --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-build
+          path: |
+            build/app/outputs/flutter-apk/*-debug.apk
+            build/app/outputs/bundle/release/*.aab
+            build/app/outputs/flutter-apk/*-release.apk
