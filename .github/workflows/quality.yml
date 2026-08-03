@@ -16,9 +16,5 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - run: flutter pub get
-      # Keep the check non-blocking for Flutter-generated host files. The
-      # release workflows format the same sources before analysis and builds.
-      - run: dart format .
-      - run: flutter analyze
-      - run: flutter test
+      - name: Verify build input and Dart quality
+        run: bash tool/bootstrap_native_hosts.sh --skip-android

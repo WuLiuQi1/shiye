@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0-alpha.20.6+25
+
+- 将已完成的新拾页功能源码整理为可由 Flutter stable 生成 iOS / Android 宿主的独立工程。
+- 修复本地格式枚举、阅读器正文模型、分隔线组件、字体加载导入与测试中的 const 使用，消除已知编译错误。
+- 原生构建入口现在先验证拾页版本与核心源码文件，并在 CI 日志中输出可核验的构建输入标识。
+- `quality`、Android 和 iOS 工作流统一复用同一构建入口；Android 产出可安装的 debug APK，macOS 产出无签名 iOS 编译产物。
+
 ## 1.0.0-alpha.20+21
 
 - 修复阅读统计页面的 Dart 括号语法错误，恢复 `dart format`、iOS 与 Android CI 构建流程。

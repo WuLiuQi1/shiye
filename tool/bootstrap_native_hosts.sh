@@ -17,6 +17,20 @@ if ! command -v flutter >/dev/null 2>&1; then
 fi
 
 flutter --version
+expected_version='1.0.0-alpha.20.6+25'
+actual_version="$(sed -n 's/^version: //p' pubspec.yaml | head -n 1)"
+if [[ "$actual_version" != "$expected_version" ]]; then
+  echo "Unexpected 拾页 source version: $actual_version (expected $expected_version)." >&2
+  exit 1
+fi
+for required_file in \
+  lib/app/shiye_app.dart \
+  lib/features/reader/application/reader_session.dart \
+  lib/domain/use_cases/switch_reader_source.dart \
+  test/switch_reader_source_test.dart; do
+  test -f "$required_file"
+done
+echo "Build input verified: 拾页 $actual_version ($(find lib -name '*.dart' -type f | wc -l | tr -d ' ') Dart source files)"
 flutter pub get
 
 # The app source deliberately lives outside platform directories. Flutter owns
@@ -43,10 +57,7 @@ PY
 
 python3 tool/configure_document_opening.py
 
-# Flutter creates the native host files above, so formatting may legitimately
-# update generated Dart files in a fresh CI checkout. Apply formatting before
-# validation instead of treating those generated changes as a build failure.
-dart format .
+dart format --set-exit-if-changed .
 flutter analyze
 flutter test
 

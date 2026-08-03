@@ -4,7 +4,7 @@
 
 ## 当前里程碑
 
-`1.0.0-alpha.20`：TXT、EPUB 与 PDF 本地阅读已可用；PDF 使用独立的固定版式阅读器，支持缩放、翻页和进度恢复。支持导入阅读 / Legado 与 ORSP JSON 书源；带 JavaScript、Java、登录或 Cookie 字段的书源可以保存到管理页，但拾页绝不会执行脚本或自动携带鉴权数据，依赖这些能力的源会标记为不可用并跳过搜索。声明式子集（CSS、简单 XPath、正则替换）可参与搜索和阅读，并可在阅读中手动切换已匹配的同书来源。阅读页支持导入 `.ttf/.otf` 字体、关键词/正则内容过滤，以及网络章节缓存的查看与清理。新增设备本地阅读统计：今日/本周/本月时长、连续阅读天数、已读书数与每本书阅读时长。TXT、EPUB 和书源章节支持使用手机系统 TTS 听书：当前章朗读、暂停/继续、语速和自动下一章；正文不上传。Android / iOS 原生工程在生成时会注册可打开的本地书籍格式。
+`1.0.0-alpha.20.6`：TXT、EPUB 与 PDF 本地阅读已可用；PDF 使用独立的固定版式阅读器，支持缩放、翻页和进度恢复。支持导入阅读 / Legado 与 ORSP JSON 书源；带 JavaScript、Java、登录或 Cookie 字段的书源可以保存到管理页，但拾页绝不会执行脚本或自动携带鉴权数据，依赖这些能力的源会标记为不可用并跳过搜索。声明式子集（CSS、简单 XPath、正则替换）可参与搜索和阅读，并可在阅读中手动切换已匹配的同书来源。阅读页支持导入 `.ttf/.otf` 字体、关键词/正则内容过滤，以及网络章节缓存的查看与清理。新增设备本地阅读统计：今日/本周/本月时长、连续阅读天数、已读书数与每本书阅读时长。TXT、EPUB 和书源章节支持使用手机系统 TTS 听书：当前章朗读、暂停/继续、语速和自动下一章；正文不上传。Android / iOS 原生工程由项目脚本按 Flutter stable 模板生成，并会注册可打开的本地书籍格式。
 
 ## 架构
 
@@ -41,7 +41,7 @@ bash tool/bootstrap_native_hosts.sh
 flutter run
 ```
 
-该脚本会生成 Android/iOS 宿主工程，设置应用显示名为“拾页”，执行 format、analyze、test，并在 Android 上生成可安装的 debug APK。它在 macOS + Xcode 上还会进行无签名 iOS 构建；Linux/Windows 只跳过这一项。不要使用旧版拾页的宿主代码或资源。发布前请将 `com.shiye.reader` 替换为已注册的正式 Bundle ID / applicationId。
+该脚本会生成拾页自己的 Android/iOS 宿主工程，设置应用显示名为“拾页”，执行 format、analyze、test，并在 Android 上生成可安装的 debug APK。它在 macOS + Xcode 上还会进行无签名 iOS 构建；Linux/Windows 只跳过这一项。发布前请将 `com.shiye.reader` 替换为已注册的正式 Bundle ID / applicationId。
 
 ## 质量与发布
 

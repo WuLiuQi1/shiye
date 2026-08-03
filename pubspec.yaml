@@ -1,7 +1,7 @@
 name: reader
-description: A private, cross-platform reading app for iOS and Android.
+description: 拾页：独立开发的跨平台阅读应用。
 publish_to: none
-version: 1.0.0-alpha.20.3+22
+version: 1.0.0-alpha.20.6+25
 
 environment:
   sdk: ^3.6.0

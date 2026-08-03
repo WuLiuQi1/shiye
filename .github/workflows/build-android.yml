@@ -20,6 +20,18 @@ jobs:
           channel: stable
       - name: Generate native hosts and validate Dart code
         run: bash tool/bootstrap_native_hosts.sh
+      - name: Archive complete buildable source
+        run: |
+          mkdir -p dist
+          zip -r "dist/shiye-reader-1.0.0-alpha.20.6-complete-source.zip" \
+            .github android ios lib test tool docs \
+            .gitignore .metadata analysis_options.yaml pubspec.yaml README.md BUILD.md CHANGELOG.md LICENSE \
+            -x 'tool/__pycache__/*' 'android/.gradle/*' 'ios/Pods/*'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shiye-complete-source
+          path: dist/shiye-reader-1.0.0-alpha.20.6-complete-source.zip
+          if-no-files-found: error
       - name: Verify Android release secrets
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         env:

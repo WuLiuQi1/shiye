@@ -15,7 +15,7 @@
 bash tool/bootstrap_native_hosts.sh
 ```
 
-它是生成原生宿主、统一检查 Dart 代码并产出 Android debug APK 的唯一入口。iOS 无签名构建仅能在装有 Xcode 的 macOS 上完成。
+它是生成拾页原生宿主、统一检查 Dart 代码并产出 Android debug APK 的唯一入口。iOS 无签名构建仅能在装有 Xcode 的 macOS 上完成。
 
 ## Android
 
