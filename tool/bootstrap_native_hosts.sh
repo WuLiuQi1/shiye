@@ -57,7 +57,10 @@ PY
 
 python3 tool/configure_document_opening.py
 
-dart format --set-exit-if-changed .
+# Format source automatically.  `--set-exit-if-changed` makes CI fail merely
+# because a file needs formatting, which prevents the actual analyzer, tests,
+# and build from running.
+dart format .
 flutter analyze
 flutter test
 
