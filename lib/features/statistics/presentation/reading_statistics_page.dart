@@ -74,11 +74,168 @@ String _duration(int seconds) {
   return '${minutes ~/ 60} 小时${minutes % 60 == 0 ? '' : ' ${minutes % 60} 分'}';
 }
 
-class _Metric { const _Metric(this.title, this.value, this.icon); final String title; final String value; final IconData icon; }
-class _MetricGrid extends StatelessWidget { const _MetricGrid({required this.items}); final List<_Metric> items;
-  @override Widget build(BuildContext context) => Wrap(spacing: 12, runSpacing: 12, children: items.map((item) => SizedBox(width: (MediaQuery.sizeOf(context).width - 52) / 2, child: DecoratedBox(decoration: BoxDecoration(color: CupertinoColors.systemGrey6.resolveFrom(context), borderRadius: BorderRadius.circular(16)), child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Icon(item.icon, color: CupertinoTheme.of(context).primaryColor), const SizedBox(height: 18), Text(item.value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)), const SizedBox(height: 2), Text(item.title, style: const TextStyle(color: CupertinoColors.secondaryLabel))])))).toList()); }
-class _Section extends StatelessWidget { const _Section({required this.title, required this.value, required this.subtitle}); final String title; final String value; final String subtitle;
-  @override Widget build(BuildContext context) => DecoratedBox(decoration: BoxDecoration(color: CupertinoColors.systemGrey6.resolveFrom(context), borderRadius: BorderRadius.circular(16)), child: Padding(padding: const EdgeInsets.all(18), child: Row(children: [const Icon(CupertinoIcons.check_mark_circled, color: CupertinoColors.activeGreen), const SizedBox(width: 12), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(title, style: const TextStyle(fontWeight: FontWeight.w600)), Text(subtitle, style: const TextStyle(fontSize: 13, color: CupertinoColors.secondaryLabel))])), Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700))]))); }
-class _BookTimeRow extends StatelessWidget { const _BookTimeRow({required this.book, required this.duration}); final Book book; final String duration;
-  @override Widget build(BuildContext context) => Container(margin: const EdgeInsets.only(top: 8), padding: const EdgeInsets.all(14), decoration: BoxDecoration(color: CupertinoColors.systemGrey6.resolveFrom(context), borderRadius: BorderRadius.circular(14)), child: Row(children: [const Icon(CupertinoIcons.book, color: CupertinoColors.secondaryLabel), const SizedBox(width: 12), Expanded(child: Text(book.title, maxLines: 1, overflow: TextOverflow.ellipsis)), Text(duration, style: const TextStyle(fontWeight: FontWeight.w600))])); }
-class _EmptyHint extends StatelessWidget { const _EmptyHint(); @override Widget build(BuildContext context) => const Padding(padding: EdgeInsets.symmetric(vertical: 28), child: Center(child: Text('开始阅读后，这里会记录每本书的时长。', style: TextStyle(color: CupertinoColors.secondaryLabel)))); }
+class _Metric {
+  const _Metric(this.title, this.value, this.icon);
+
+  final String title;
+  final String value;
+  final IconData icon;
+}
+
+class _MetricGrid extends StatelessWidget {
+  const _MetricGrid({required this.items});
+
+  final List<_Metric> items;
+
+  @override
+  Widget build(BuildContext context) => Wrap(
+        spacing: 12,
+        runSpacing: 12,
+        children: items
+            .map(
+              (item) => SizedBox(
+                width: (MediaQuery.sizeOf(context).width - 52) / 2,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: CupertinoColors.systemGrey6.resolveFrom(context),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          item.icon,
+                          color: CupertinoTheme.of(context).primaryColor,
+                        ),
+                        const SizedBox(height: 18),
+                        Text(
+                          item.value,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          item.title,
+                          style: const TextStyle(
+                            color: CupertinoColors.secondaryLabel,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )
+            .toList(),
+      );
+}
+
+class _Section extends StatelessWidget {
+  const _Section({
+    required this.title,
+    required this.value,
+    required this.subtitle,
+  });
+
+  final String title;
+  final String value;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) => DecoratedBox(
+        decoration: BoxDecoration(
+          color: CupertinoColors.systemGrey6.resolveFrom(context),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(18),
+          child: Row(
+            children: [
+              const Icon(
+                CupertinoIcons.check_mark_circled,
+                color: CupertinoColors.activeGreen,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: CupertinoColors.secondaryLabel,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+}
+
+class _BookTimeRow extends StatelessWidget {
+  const _BookTimeRow({required this.book, required this.duration});
+
+  final Book book;
+  final String duration;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        margin: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: CupertinoColors.systemGrey6.resolveFrom(context),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Row(
+          children: [
+            const Icon(
+              CupertinoIcons.book,
+              color: CupertinoColors.secondaryLabel,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                book.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Text(duration, style: const TextStyle(fontWeight: FontWeight.w600)),
+          ],
+        ),
+      );
+}
+
+class _EmptyHint extends StatelessWidget {
+  const _EmptyHint();
+
+  @override
+  Widget build(BuildContext context) => const Padding(
+        padding: EdgeInsets.symmetric(vertical: 28),
+        child: Center(
+          child: Text(
+            '开始阅读后，这里会记录每本书的时长。',
+            style: TextStyle(color: CupertinoColors.secondaryLabel),
+          ),
+        ),
+      );
+}

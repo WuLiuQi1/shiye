@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-alpha.20+21
+
+- 修复阅读统计页面的 Dart 括号语法错误，恢复 `dart format`、iOS 与 Android CI 构建流程。
+
 ## 1.0.0-alpha.20+20
 
 - Added device-local system-TTS listening for reflowable TXT, EPUB and book-source chapters: start, pause/continue, stop, adjustable speech rate and automatic next chapter.
