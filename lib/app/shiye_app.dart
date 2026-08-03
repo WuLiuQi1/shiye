@@ -16,6 +16,7 @@ import '../data/sources/json_book_source_importer.dart';
 import '../data/sources/epub_local_book_parser.dart';
 import '../platform/shared_book_intent_service.dart';
 import '../domain/services/declarative_rule_engine.dart';
+import '../domain/models/book.dart';
 import '../domain/models/reader_settings.dart';
 import '../domain/repositories/reading_statistics_repository.dart';
 import '../domain/use_cases/browse_book_source.dart';

@@ -5,7 +5,7 @@ import 'package:reader/domain/services/declarative_rule_engine.dart';
 import 'package:reader/domain/use_cases/browse_book_source.dart';
 
 void main() {
-  const source = BookSource(
+  final source = BookSource(
     id: 'demo',
     name: '离线示例源',
     baseUrl: Uri(scheme: 'https', host: 'books.example'),
@@ -56,7 +56,7 @@ void main() {
   });
 
   test('supports a safe XPath selector and inline regex replacement', () async {
-    const xpathSource = BookSource(
+    final xpathSource = BookSource(
       id: 'xpath',
       name: 'XPath 示例源',
       baseUrl: Uri(scheme: 'https', host: 'books.example'),

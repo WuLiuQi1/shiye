@@ -3,7 +3,7 @@ import 'package:reader/data/sources/json_book_source_importer.dart';
 import 'package:reader/domain/models/book_source.dart';
 
 void main() {
-  const importer = JsonBookSourceImporter();
+  final importer = JsonBookSourceImporter();
 
   test('imports a 阅读/Legado JSON source without executing rules', () {
     final sources = importer.importJson('''

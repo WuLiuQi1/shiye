@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui' show FontLoader;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 
 import '../../../domain/models/book.dart';
+import '../../../domain/models/book_source_content.dart';
 import '../../../domain/models/reader_settings.dart';
 import '../../../domain/repositories/reader_settings_repository.dart';
 import '../../../domain/repositories/chapter_content_cache.dart';
@@ -277,13 +277,13 @@ class _ReaderSessionState extends State<ReaderSession> with WidgetsBindingObserv
             const Spacer(),
             CupertinoButton(
               padding: EdgeInsets.zero,
-              minSize: 28,
+              minimumSize: const Size.square(28),
               onPressed: _tts.togglePause,
               child: Icon(_tts.isPaused ? CupertinoIcons.play_fill : CupertinoIcons.pause_fill, size: 17),
             ),
             CupertinoButton(
               padding: EdgeInsets.zero,
-              minSize: 28,
+              minimumSize: const Size.square(28),
               onPressed: _tts.stop,
               child: const Icon(CupertinoIcons.stop_fill, size: 16),
             ),
@@ -524,7 +524,10 @@ class _ReaderSessionState extends State<ReaderSession> with WidgetsBindingObserv
                 const Padding(padding: EdgeInsets.all(16), child: Text('目录', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))),
                 Expanded(child: ListView.separated(
                   itemCount: toc.length,
-                  separatorBuilder: (_, __) => const Divider(height: 1),
+                  separatorBuilder: (_, __) => Container(
+                    height: 1,
+                    color: CupertinoColors.separator.resolveFrom(context),
+                  ),
                   itemBuilder: (_, index) {
                     final item = toc[index];
                     final current = item.chapter.index == _book.readingChapterIndex;
@@ -795,7 +798,10 @@ class _ReaderSessionState extends State<ReaderSession> with WidgetsBindingObserv
                       ? const Center(child: Text('还没有过滤规则'))
                       : ListView.separated(
                           itemCount: rules.length,
-                          separatorBuilder: (_, __) => const Divider(height: 1),
+                          separatorBuilder: (_, __) => Container(
+                            height: 1,
+                            color: CupertinoColors.separator.resolveFrom(context),
+                          ),
                           itemBuilder: (_, index) => CupertinoListTile.notched(
                             title: Text(rules[index].pattern),
                             subtitle: Text(rules[index].isRegExp ? '正则替换' : '关键词替换'),

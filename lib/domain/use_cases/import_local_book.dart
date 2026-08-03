@@ -28,6 +28,8 @@ class ImportLocalBook {
       LocalBookFormat.txt => 10 * 1024 * 1024,
       LocalBookFormat.epub => 50 * 1024 * 1024,
       LocalBookFormat.pdf => 100 * 1024 * 1024,
+      LocalBookFormat.mobi || LocalBookFormat.azw3 =>
+        throw StateError('Unsupported e-book format passed validation.'),
     };
     if (stat.size > maximumBytes) {
       throw LocalBookImportException('${format.label} 文件过大，当前最多支持 ${maximumBytes ~/ 1024 ~/ 1024} MiB。');
