@@ -43,7 +43,10 @@ PY
 
 python3 tool/configure_document_opening.py
 
-dart format --set-exit-if-changed .
+# Flutter creates the native host files above, so formatting may legitimately
+# update generated Dart files in a fresh CI checkout. Apply formatting before
+# validation instead of treating those generated changes as a build failure.
+dart format .
 flutter analyze
 flutter test
 
